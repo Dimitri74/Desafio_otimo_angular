@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="ui-g">
+
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
+
+      <div class="ui-g-12">
+        <h3>Empresas Cadastradas</h3>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid ">
+        <label>CNPJ: </label>
+        <input pInputText type="text" name="cnpj" [(ngModel)]="filtro.cnpj" placeholder="digite o CNPJ para filtro">
+      </div>
+
+      <div class="ui-g-12 ui-md-8 ui-fluid">
+        <label>Nome da empresa: </label>
+        <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome"
+          placeholder="digite o nome da empresa para filtro">
+      </div>
+
+      <div class="ui-g-12 ui-md-3">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+    </form>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-table [value]="lancamentos" [responsive]="true"
+          emptyMessage="Registro Não Encontrado"
+          [paginator]="true" [rows]="filtro.itensPorPagina"
+          [lazy]="true" [totalRecords]="totalRegistros"
+          (onLazyLoad)="aoMudarPagina($event)"
+          #tabela>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>CNPJ</th>
+              <th>Ações</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-lancamento>
+            <tr>
+              <td styleClass="col-data">{{lancamento.codigo}}</td>
+              <td styleClass="col-data">{{lancamento.nome}}</td>
+              <td styleClass="col-data">{{lancamento.cnpj}}</td>
+
+
+            <td styleClass="col-acoes">
+              <a pButton icon="pi pi-pencil" style="margin: 4px;" pTooltip="Editar"
+               [routerLink]="['/cadastros' , lancamento.codigo ]" tooltipPosition="top" ></a>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
+              (click)="confirmarExclusao(lancamento)"></button>
+            </td>
+          </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6">
+                Nenhum registro encontrado
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <div class="ui-g-8 ui-md-6" style="margin-inline: initial;">
+        <button pButton label="Novo Cadastro" routerLink="/cadastros/novo"></button>
+      </div>
+    </div>

@@ -1,0 +1,97 @@
+<div class="container">
+  <form #f="ngForm" (ngSubmit)="salvar(f)" >
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h3>{{ editando ? 'Editar ' : 'Cadastrar '}} Empresa</h3>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>CNPJ*</label>
+        <p-inputMask mask="99.999.999/9999-99" name="cnpj" id="cnpj" [(ngModel)]="empresa.cnpj" #cnpj="ngModel"
+          placeholder="cnpj para busca" required></p-inputMask>
+        <app-message [control]="cnpj" error="required" text="Informe o cnpj"></app-message>
+      </div>
+      <div class="ui-g-12 ui-md-5 ui-fluid">
+        <label>Tipo da Empresa*</label>
+        <p-dropdown name="tipo" [options]="tipoEmpresas" [(ngModel)]="empresa.tipo" #tipo="ngModel"
+          placeholder="selecione" required></p-dropdown>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Nome Da Empresa*</label>
+        <input pInputText type="text" name="nome" [(ngModel)]="empresa.nome" #nome="ngModel"
+          placeholder="nome da empresa" required minlength="3">
+        <app-message [control]="nome" error="required" text="Informe nome da empresa"></app-message>
+        <app-message [control]="nome" error="minlength"
+          text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Razão Social*</label>
+        <input pInputText type="text" name="razao" [(ngModel)]="empresa.razao_social" #razao="ngModel"
+          placeholder="razão social" required>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Contato*</label>
+        <input pInputText type="text" name="contato" [(ngModel)]="empresa.contato" #contato="ngModel"
+          placeholder="contato" required>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>E-mail*</label>
+        <input pInputText type="text" name="email" [(ngModel)]="empresa.email" #email="ngModel" placeholder="e-mail"
+          required email="true">
+      </div>
+
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>CEP*</label>
+        <input type="text" name="cep" pInputText [(ngModel)]="empresa.endereco.cep" #cep="ngModel"
+          (blur)="consultaCEP($event.target.value , f)" placeholder="digite o cep" required />
+
+
+        <app-message [control]="cep" error="required" text="Informe o CEP"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-8 ui-fluid">
+        <label>Estado*</label>
+        <input pInputText type="text" name="estado" id="estado" [ngModel]="empresa.endereco.estado" #estado="ngModel"
+          placeholder="nome do estado" required>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Bairro*</label>
+        <input pInputText type="text" name="bairro" [ngModel]="empresa.endereco.bairro" #bairro="ngModel"
+          placeholder="bairro" required>
+
+        <app-message [control]="bairro" error="required" text="Informe o bairro"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Cidade*</label>
+        <input pInputText type="text" name="cidade" [ngModel]="empresa.endereco.cidade" #cidade="ngModel"
+          placeholder="nome da cidade" required>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Logradouro*</label>
+        <input pInputText type="text" name="logradouro" [ngModel]="empresa.endereco.logradouro" #logradouro="ngModel"
+          placeholder="logradouro" required>
+
+        <app-message [control]="logradouro" error="required" text="Informe o logradouro"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-8 ui-fluid">
+        <label>Complemento</label>
+        <input pInputText type="text" name="complemento" [ngModel]="empresa.endereco.complemento"
+          #complemento="ngModel" placeholder="complemento" required>
+      </div>
+
+
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" style="margin: 4px;"></button>
+        <button pButton type="button" label="Lista de Empresas" routerLink="/cadastros"></button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
